@@ -28,7 +28,7 @@ const ArticleDetailPage = () => {
     onSuccess: (data) => {
       setbreadCrumbsData([
         { name: "Home", link: "/" },
-        { name: "Gaketa title", link: `/blog/${data.slug}` },
+        { name: "Gaketa title", link: `/post/${data.slug}` },
       ]);
       setBody(parseJsonToHtml(data?.body));
     },
