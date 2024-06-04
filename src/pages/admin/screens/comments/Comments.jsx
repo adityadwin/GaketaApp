@@ -39,23 +39,27 @@ const Comments = () => {
   });
 
   const {
-    mutate: mutateUpdateCommentCheck,
-    isLoading: isLoadingUpdateCommentCheck,
-  } = useMutation({
-    mutationFn: ({ token, check, commentId }) => {
-      return updateComment({ token, check, commentId });
-    },
-    onSuccess: (data) => {
+  mutate: mutateUpdateCommentCheck,
+  isLoading: isLoadingUpdateCommentCheck,
+} = useMutation({
+  mutationFn: ({ token, check, commentId }) => {
+    return updateComment({ token, check, commentId });
+  },
+  onSuccess: (data) => {
+    if (data) {
       queryClient.invalidateQueries(["comments"]);
       toast.success(
-        data?.check ? "CComment is approved" : "Comment is not approved"
+        data?.check ? "Comment is approved" : "Comment is not approved"
       );
-    },
-    onError: (error) => {
-      toast.error(error.message);
-      console.log(error);
-    },
-  });
+    } else {
+      toast.error("An error occurred while updating the comment.");
+    }
+  },
+  onError: (error) => {
+    toast.error(error.message);
+    console.log(error);
+  },
+});
 
   return (
     <DataTable
