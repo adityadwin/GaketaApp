@@ -50,6 +50,13 @@ const BlogPage = () => {
     setSearchParams({ page: 1, search: searchKeyword });
   };
 
+  const totalData = data?.data?.length || 0;
+  const itemsPerPage = 6;
+  const totalPageCount =
+    data?.headers?.["x-totalpagecount"]
+      ? JSON.parse(data.headers["x-totalpagecount"])
+      : Math.ceil(totalData / itemsPerPage);
+
   return (
     <MainLayout>
       <section className="container mx-auto flex flex-col bg-[#F6F5F2] px-5 py-10">
@@ -83,11 +90,7 @@ const BlogPage = () => {
           <Pagination
             onPageChange={(page) => handlePageChange(page)}
             currentPage={currentPage}
-            totalPageCount={
-              data?.headers?.["x-totalpagecount"]
-                ? JSON.parse(data.headers["x-totalpagecount"])
-                : 0
-            }
+            totalPageCount={totalPageCount}
           />
         )}
       </section>
