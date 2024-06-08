@@ -30,8 +30,6 @@ const BlogPage = () => {
     },
   });
 
-  const totalPageCount = Math.ceil(data?.data?.length / 6);
-
   console.log(data);
 
   useEffect(() => {
@@ -44,6 +42,7 @@ const BlogPage = () => {
   }, [currentPage, searchKeyword, refetch]);
 
   const handlePageChange = (page) => {
+    // change the page's query string in the URL
     setSearchParams({ page, search: searchKeyword });
   };
 
@@ -84,7 +83,7 @@ const BlogPage = () => {
           <Pagination
             onPageChange={(page) => handlePageChange(page)}
             currentPage={currentPage}
-            totalPageCount={totalPageCount}
+            totalPageCount={JSON.parse(data?.headers?.["x-totalpagecount"])}
           />
         )}
       </section>
